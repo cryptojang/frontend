@@ -1,6 +1,7 @@
 // slice는 데이터와 할 수 있는 기능(리듀서) 모아놓은 파일
 
 import { createSlice } from "@reduxjs/toolkit";
+
 const appSlice = createSlice({
   name: "appSlice", //slice 이름
   initialState: {
