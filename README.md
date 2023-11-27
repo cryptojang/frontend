@@ -1,1 +1,1 @@
-# Create React App with Tailwind CSS Template
+# Frontend of todo list with backend api and redux
