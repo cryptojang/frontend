@@ -35,3 +35,23 @@ export const toggleDone = createAsyncThunk(
     return response.data.todo;
   }
 );
+
+export const updateTodo = createAsyncThunk(
+  "appSlice/updateTodo", //썽크 이름
+  async ({ todoId, title }) => {
+    const response = await axios.put(
+      `
+    http://localhost:3010/todos/${todoId}`,
+      {
+        title,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data.todo;
+  }
+);

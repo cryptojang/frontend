@@ -1,7 +1,7 @@
 // slice는 데이터와 할 수 있는 기능(리듀서) 모아놓은 파일
 
 import { createSlice } from "@reduxjs/toolkit";
-import { getTodos, toggleDone } from "./appThunk";
+import { getTodos, toggleDone, updateTodo } from "./appThunk";
 import { createTodo } from "../redux/appThunk";
 
 const appSlice = createSlice({
@@ -58,6 +58,24 @@ const appSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(toggleDone.rejected, (state) => {
+      state.isLoading = false;
+    });
+
+    builder.addCase(updateTodo.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(updateTodo.fulfilled, (state, action) => {
+      //appThunk의 return 값은 action에 담김
+      state.todos = state.todos.map((v) => {
+        if (v.id === action.payload.id) {
+          return action.payload;
+        } else {
+          return v;
+        }
+      });
+      state.isLoading = false;
+    });
+    builder.addCase(updateTodo.rejected, (state) => {
       state.isLoading = false;
     });
   },
