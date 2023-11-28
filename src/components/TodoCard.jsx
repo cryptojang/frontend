@@ -1,6 +1,6 @@
 import { FiEdit3, FiDelete } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleDone, updateTodo } from "../redux/appThunk";
+import { deleteTodo, toggleDone, updateTodo } from "../redux/appThunk";
 import { useState } from "react";
 
 const TodoCard = ({ index, id, title, isDone }) => {
@@ -20,12 +20,16 @@ const TodoCard = ({ index, id, title, isDone }) => {
   const onSubmitUpdateTodo = (e) => {
     e.preventDefault();
 
-    if (!newTodo) return;
+    if (!newTodo || newTodo === title) return;
 
     dispatch(updateTodo({ todoId: id, title: newTodo }));
 
-    setNewTodo("");
+    setNewTodo(newTodo);
     setUpdateToggle(false);
+  };
+
+  const onClickDelete = () => {
+    dispatch(deleteTodo({ todoId: id }));
   };
 
   return (
@@ -70,7 +74,10 @@ const TodoCard = ({ index, id, title, isDone }) => {
           </div>
         )}
       </button>
-      <button className=" w-2/12 px-5 hover:text-blue-600 ">
+      <button
+        className=" w-2/12 px-5 hover:text-blue-600 "
+        onClick={onClickDelete}
+      >
         <FiDelete />
       </button>
     </li>
